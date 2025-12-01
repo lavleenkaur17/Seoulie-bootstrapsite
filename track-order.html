@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Track Order - Seoulie</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <style>
+        :root {
+            --color-primary: #D8BFD8;
+            --color-secondary: #C1E1C1;
+            --color-light: #FFFFFF;
+            --color-dark: #2C3E50;
+            --color-accent: #87CEEB;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.98) !important;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            font-weight: 700 !important;
+            color: var(--color-primary) !important;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: var(--color-dark) !important;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: var(--color-primary);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        .nav-link:hover {
+            color: var(--color-primary) !important;
+        }
+
+        .btn-outline-dark {
+            border-color: var(--color-secondary) !important;
+            color: var(--color-secondary) !important;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-dark:hover {
+            background-color: var(--color-secondary) !important;
+            color: var(--color-dark) !important;
+            border-color: var(--color-secondary) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(193, 225, 193, 0.4);
+        }
+
+        /* Track Header */
+        .track-header {
+            background: linear-gradient(135deg, #f8f4ff 0%, #e8f5f0 100%);
+            padding: 4rem 0 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .track-header::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(216, 191, 216, 0.15) 0%, transparent 70%);
+            top: -150px;
+            right: -150px;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .track-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .track-header h1 span {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .track-header p {
+            font-size: 1.2rem;
+            color: var(--color-dark);
+            opacity: 0.8;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Search Section */
+        .search-section {
+            padding: 3rem 0;
+            background: white;
+        }
+
+        .search-box {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-box h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .search-input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            border: 2px solid #e8e8e8;
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 0.2rem rgba(216, 191, 216, 0.15);
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, var(--color-secondary) 0%, #a8d5a8 100%);
+            color: var(--color-dark);
+            border: 0;
+            padding: 1rem 2.5rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(193, 225, 193, 0.4);
+        }
+
+        .search-hint {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Tracking Result */
+        .tracking-section {
+            padding: 3rem 0 5rem;
+        }
+
+        .tracking-result {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .order-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .info-item h4 {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .info-item p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-dark);
+            margin: 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .status-processing {
+            background: linear-gradient(135deg, rgba(135, 206, 235, 0.2) 0%, rgba(135, 206, 235, 0.3) 100%);
+            color: var(--color-accent);
+        }
+
+        .status-shipped {
+            background: linear-gradient(135deg, rgba(193, 225, 193, 0.2) 0%, rgba(193, 225, 193, 0.3) 100%);
+            color: var(--color-secondary);
+        }
+
+        .status-delivered {
+            background: linear-gradient(135deg, rgba(216, 191, 216, 0.2) 0%, rgba(216, 191, 216, 0.3) 100%);
+            color: var(--color-primary);
+        }
+
+        /* Timeline */
+        .tracking-timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 50px;
+            width: 2px;
+            height: calc(100% + 3rem);
+            background: #e0e0e0;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item.completed .timeline-icon {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+        }
+
+        .timeline-item.active .timeline-icon {
+            background: linear-gradient(135deg, var(--color-secondary) 0%, #a8d5a8 100%);
+            color: white;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(193, 225, 193, 0.7);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(193, 225, 193, 0);
+            }
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding-top: 0.5rem;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: #666;
+            margin-bottom: 0.3rem;
+            line-height: 1.6;
+        }
+
+        .timeline-time {
+            font-size: 0.85rem;
+            color: #999;
+            font-weight: 500;
+        }
+
+        /* Order Items */
+        .order-items {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .order-items h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .order-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1rem;
+            background: #fafafa;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .order-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .order-item-details {
+            flex: 1;
+        }
+
+        .order-item-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 0.3rem;
+        }
+
+        .order-item-quantity {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .order-item-price {
+            font-weight: 700;
+            color: var(--color-accent);
+            font-size: 1.1rem;
+        }
+
+        /* No Result */
+        .no-result {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .no-result-icon {
+            font-size: 4rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .no-result h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .no-result p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Footer */
+        footer#footer {
+            background-color: var(--color-light) !important;
+            color: #4A6070;
+            font-size: 0.95rem;
+            padding: 4rem 0;
+            border-top: 1px solid #F0F0F8;
+        }
+
+        footer#footer h5 {
+            color: var(--color-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        footer#footer a,
+        footer#footer p {
+            color: #4A6070;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        footer#footer a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #F0F0F8;
+            padding-top: 2rem;
+            margin-top: 3rem;
+            font-size: 0.85rem;
+        }
+
+        .footer-brand {
+            color: var(--color-primary) !important;
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .footer-column {
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .track-header h1 {
+                font-size: 2rem;
+            }
+
+            .search-input-group {
+                flex-direction: column;
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+
+            .order-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .timeline-item {
+                gap: 1rem;
+            }
+
+            .order-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .order-item-image {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg text-uppercase fs-6 p-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="homepage.html">Seoulie</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="homepage.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="productpage.html">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="aboutpage.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contactpage.html">Contact</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="nav-link btn btn-sm btn-outline-dark px-4 py-2" href="cart.html">Cart (0)</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Track Header -->
+    <section class="track-header">
+        <div class="container">
+            <h1>Track Your <span>Order</span></h1>
+            <p>Enter your order ID to track your shipment</p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-box">
+                <h3>Enter Order Details</h3>
+                <div class="search-input-group">
+                    <input type="text" class="search-input" id="orderIdInput"
+                        placeholder="Order ID (e.g., SEOULIE12345)">
+                    <button class="search-btn" onclick="trackOrder()">Track Order</button>
+                </div>
+                <p class="search-hint">You can find your order ID in the confirmation email we sent you</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tracking Section -->
+    <section class="tracking-section" id="trackingSection" style="display: none;">
+        <div class="container">
+            <div class="tracking-result" id="trackingResult">
+                <!-- Tracking result will be displayed here -->
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-12 footer-column text-center text-md-start">
+                    <a class="footer-brand" href="homepage.html">Seoulie</a>
+                    <p class="text-center text-md-start">
+                        Curated collection of the finest aesthetic Korean fashion, brought directly from Seoul to you.
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 footer-column">
+                    <h5>Quick Links</h5>
+                    <a href="homepage.html">Home</a>
+                    <a href="productpage.html">Shop Products</a>
+                    <a href="track-order.html">Track Your Order</a>
+                    <a href="shipping-returns.html">Shipping & Returns</a>
+                </div>
+
+                <div class="col-md-4 col-sm-6 footer-column">
+                    <h5>Support</h5>
+                    <a href="contactpage.html">Contact Us</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="terms-service.html">Terms of Service</a>
+                    <a href="faqpage.html">FAQ</a>
+                </div>
+            </div>
+
+            <div class="row footer-bottom text-center">
+                <div class="col-12">
+                    <p>&copy; 2025 Seoulie. All rights reserved. <br> Powered by Lavleen Kaur.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <script>
+        // Demo order data
+        const demoOrders = {
+            'SEOULIE12345': {
+                orderId: 'SEOULIE12345',
+                date: 'November 25, 2025',
+                status: 'shipped',
+                estimatedDelivery: 'December 2, 2025',
+                items: [
+                    { name: 'Strawberry Sweatshirt', quantity: 1, price: 25.00, image: 'https://i.pinimg.com/1200x/91/8f/54/918f54cfeb664f4726f1ccf345481c63.jpg' },
+                    { name: 'Grape Knit Cardigan', quantity: 2, price: 45.50, image: 'https://i.pinimg.com/1200x/11/77/c3/1177c3c6bd23dd9d12db3ef2fc4191c2.jpg' }
+                ],
+                timeline: [
+                    { status: 'Order Placed', desc: 'Your order has been received and confirmed', date: 'Nov 25, 2025 - 10:30 AM', completed: true },
+                    { status: 'Processing', desc: 'Your order is being prepared for shipment', date: 'Nov 25, 2025 - 2:15 PM', completed: true },
+                    { status: 'Shipped', desc: 'Your package is on the way', date: 'Nov 26, 2025 - 9:00 AM', completed: true, active: true },
+                    { status: 'Out for Delivery', desc: 'Package is out for delivery', date: 'Pending', completed: false },
+                    { status: 'Delivered', desc: 'Package delivered successfully', date: 'Pending', completed: false }
+                ]
+            },
+            'SEOULIE67890': {
+                orderId: 'SEOULIE67890',
+                date: 'November 28, 2025',
+                status: 'processing',
+                estimatedDelivery: 'December 5, 2025',
+                items: [
+                    { name: 'Korean Bear Pants', quantity: 1, price: 199.00, image: 'https://i.pinimg.com/1200x/04/dc/9e/04dc9e21d0133dfc58d4fc13a5ab5065.jpg' }
+                ],
+                timeline: [
+                    { status: 'Order Placed', desc: 'Your order has been received and confirmed', date: 'Nov 28, 2025 - 3:45 PM', completed: true },
+                    { status: 'Processing', desc: 'Your order is being prepared for shipment', date: 'In Progress', completed: true, active: true },
+                    { status: 'Shipped', desc: 'Your package is on the way', date: 'Pending', completed: false },
+                    { status: 'Out for Delivery', desc: 'Package is out for delivery', date: 'Pending', completed: false },
+                    { status: 'Delivered', desc: 'Package delivered successfully', date: 'Pending', completed: false }
+                ]
+            }
+        };
+
+        function trackOrder() {
+            const orderId = document.getElementById('orderIdInput').value.trim().toUpperCase();
+            const trackingSection = document.getElementById('trackingSection');
+            const trackingResult = document.getElementById('trackingResult');
+
+            if (!orderId) {
+                alert('Please enter an order ID');
+                return;
+            }
+
+            const order = demoOrders[orderId];
+
+            if (!order) {
+                trackingSection.style.display = 'block';
+                trackingResult.innerHTML = `
+                    <div class="no-result">
+                        <div class="no-result-icon">📦</div>
+                        <h3>Order Not Found</h3>
+                        <p>We couldn't find an order with ID: <strong>${orderId}</strong></p>
+                        <p>Please check your order ID and try again, or contact our support team.</p>
+                        <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--color-primary);">
+                            Try demo IDs: <strong>SEOULIE12345</strong> or <strong>SEOULIE67890</strong>
+                        </p>
+                    </div>
+                `;
+                trackingSection.scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+
+            // Display order tracking information
+            const statusClass = 'status-' + order.status;
+            const statusText = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+
+            trackingResult.innerHTML = `
+                <div class="order-info">
+                    <div class="info-item">
+                        <h4>Order ID</h4>
+                        <p>${order.orderId}</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Order Date</h4>
+                        <p>${order.date}</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Status</h4>
+                        <p><span class="status-badge ${statusClass}">${statusText}</span></p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Expected Delivery</h4>
+                        <p>${order.estimatedDelivery}</p>
+                    </div>
+                </div>
+
+                <div class="tracking-timeline">
+                    ${order.timeline.map(item => `
+                        <div class="timeline-item ${item.completed ? 'completed' : ''} ${item.active ? 'active' : ''}">
+                            <div class="timeline-icon">
+                                ${item.completed ? '✓' : '○'}
+                            </div>
+                            <div class="timeline-content">
+                                <h4>${item.status}</h4>
+                                <p>${item.desc}</p>
+                                <span class="timeline-time">${item.date}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="order-items">
+                    <h3>Order Items</h3>
+                    ${order.items.map(item => `
+                        <div class="order-item">
+                            <img src="${item.image}" alt="${item.name}" class="order-item-image">
+                            <div class="order-item-details">
+                                <div class="order-item-title">${item.name}</div>
+                                <div class="order-item-quantity">Quantity: ${item.quantity}</div>
+                            </div>
+                            <div class="order-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            trackingSection.style.display = 'block';
+            trackingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('orderIdInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                trackOrder();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
